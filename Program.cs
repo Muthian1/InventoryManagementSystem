@@ -6,17 +6,34 @@ using System.Windows.Forms;
 
 namespace InventoryManagementSystem
 {
-    internal static class Program
+
+    static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+           
+            try
+            {
+                AuthService.EnsureUserTable();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error initializing authentication: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            using (var login = new LoginForm())
+            {
+                var result = login.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    Application.Run(new Form1());
+                }
+            }
         }
     }
 }

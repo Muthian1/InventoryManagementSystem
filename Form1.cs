@@ -20,6 +20,9 @@ namespace InventoryManagementSystem
         {
             InitializeComponent();
 
+            
+            ApplyTheme();
+
             try
             {
                 CreateTable();
@@ -28,6 +31,64 @@ namespace InventoryManagementSystem
             catch (Exception ex)
             {
                 MessageBox.Show("Initialization error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ApplyTheme()
+        {
+            // Palette
+            var background = Color.FromArgb(250, 250, 250);
+            var primary = Color.FromArgb(33, 150, 243); // blue
+            var text = Color.FromArgb(33, 33, 33);
+
+            // Form
+            this.BackColor = background;
+            this.ForeColor = text;
+            this.Font = new Font("Segoe UI", 9F, FontStyle.Regular);
+
+            
+            foreach (var btn in this.Controls.OfType<Button>())
+            {
+                btn.FlatStyle = FlatStyle.Flat;
+                btn.BackColor = primary;
+                btn.ForeColor = Color.White;
+                btn.FlatAppearance.BorderSize = 0;
+                btn.Padding = new Padding(6, 3, 6, 3);
+                btn.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            }
+
+            foreach (var tb in this.Controls.OfType<TextBox>())
+            {
+                tb.BackColor = Color.White;
+                tb.ForeColor = text;
+                tb.BorderStyle = BorderStyle.FixedSingle;
+                tb.Font = new Font("Segoe UI", 9F, FontStyle.Regular);
+            }
+
+            foreach (var lbl in this.Controls.OfType<Label>())
+            {
+                lbl.ForeColor = text;
+                lbl.Font = new Font("Segoe UI", 9F, FontStyle.Regular);
+            }
+
+            // DataGridView styling (if present)
+            if (this.Controls.Contains(dataGridView1) && dataGridView1 != null)
+            {
+                dataGridView1.EnableHeadersVisualStyles = false;
+                dataGridView1.BackgroundColor = Color.White;
+                dataGridView1.BorderStyle = BorderStyle.None;
+                dataGridView1.GridColor = Color.FromArgb(230, 230, 230);
+
+                dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = primary;
+                dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+                dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+                dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+
+                dataGridView1.RowTemplate.Height = 28;
+                dataGridView1.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
+                dataGridView1.DefaultCellStyle.SelectionBackColor = primary;
+                dataGridView1.DefaultCellStyle.SelectionForeColor = Color.White;
+                dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             }
         }
 
@@ -115,7 +176,7 @@ namespace InventoryManagementSystem
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Reserved for runtime initialization if needed.
+            
         }
 
         private void btnLoad_Click(object sender, EventArgs e)
